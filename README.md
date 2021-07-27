@@ -2,6 +2,9 @@
 
 This repository contains the pytorch implementation of MultiRes-WNet, a convolutional neural network architecute used in ''Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels'' for image-to-image mapping in mechanics-based metamodeling.
 
+![MultiRes-WNet](https://user-images.githubusercontent.com/54042195/127224448-7d267e8f-0d6b-4b08-9335-87b72172cd2e.png)
+
+
 # Links
 
 Mechanical MNIST datasets collection: http://hdl.handle.net/2144/39371
