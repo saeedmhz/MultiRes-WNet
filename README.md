@@ -5,7 +5,9 @@ This repository contains the pytorch implementation of MultiRes-WNet, a convolut
 # Links
 
 Mechanical MNIST datasets collection: http://hdl.handle.net/2144/39371
+
 Mechanical MNIST Crack Path Github: https://github.com/saeedmhz/Mechanical-MNIST-Crack-Path
+
 Pytorch: https://pytorch.org/get-started/locally/
 
 # This repository contains the following:
