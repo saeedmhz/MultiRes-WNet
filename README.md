@@ -10,9 +10,11 @@ Mechanical MNIST Crack Path Github: https://github.com/saeedmhz/Mechanical-MNIST
 
 Pytorch: https://pytorch.org/get-started/locally/
 
+Manuscript: 
+
 # This repository contains the following:
 
-## * The code used to create the metamodels in the paper "Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels" (...)
+## The code used to create the metamodels in the paper
 
 *Network/BuildingBlocks.py* -- contains building blocks used to create MultiRes-WNet and the Autoencoder used in the paper
 
