@@ -39,3 +39,5 @@ Test a model:
 *main.py* -- the script used to train MultiResWNet on the training data and evaluate it on the test data
 
 *trained-models* -- the folder contains best performing models trained on the Mechanical Fashion MNIST
+
+*sample-dataset* -- contains the material distributions and displacement fields for the first 1000 samples in the test set of the Mechanical MNIST Uniaxial Extension
