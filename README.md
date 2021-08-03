@@ -18,12 +18,11 @@ Manuscript:
 
 Train a model:
 
-    python main.py --lr=learning rate --d=learning rate decay --s=number of epochs before learning rate reduction \
-        --e=total epochs --b=batch size --c=first layer channels --m=save model? --mn=model name --tr=True -ev=False
+    python main.py --lr=learning rate --d=learning rate decay --s=reduce learning rate after s epochs --e=total epochs --b=batch size --c=first layer channels --m=save model(true/false) --mn=model name --tr=true -ev=false
         
 Test a model:
 
-    python main.py --c=first layer channels --mn=model name --tr=False -ev=True
+    python main.py --c=first layer channels --mn=model name --tr=false -ev=true
  
 # This repository contains the following:
 
