@@ -27,3 +27,5 @@ Manuscript:
 *dataLoader.py* -- a pytorch function to load data from a folder
 
 *main.py* -- the script used to train MultiResWNet on the training data and evaluate it on the test data
+
+*trained-models* -- the folder contains best performing models trained on the Mechanical Fashion MNIST
