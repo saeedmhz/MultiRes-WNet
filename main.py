@@ -1,30 +1,47 @@
 """ Load the dataset, train or evaluate the MultiResWNet model on the dataset
 
-Parameters
+Options
 ----------
-file_loc : str
-    The file location of the spreadsheet
-print_cols : bool, optional
-    A flag used to print the columns to the console (default is False)
+learning_rate : float
+    The initial learning rate of the optimization
+decay_rate: float
+    The decay rate of the learning rate
+decay_step: int
+    After "decay_step" epochs the scheduler reduces the learning rate by decay_rate
+num_epoch: int
+    Total number of training epochs
+batch_size: int
+    Training batch size
+channels: int
+    Number of channels in the first layer of the network
+save_model: str
+    Set to "true" if you want to save a trained model
+model_name: str
+    Model name for saving and loading a trained model
+train: str
+    Set to "true" if you want to train a model
+eval: str
+    Set to "true" if you want to evaluate a trained model
 
 Returns
 -------
-    trained model will be saved in
+    during the training call the trained model is saved
+    during the evaluation call the predicted output is saved
 """
 import torch
 from torch import nn
+from torch.utils.data import TensorDataset, DataLoader
 import numpy as np
 import argparse
 import shutil
+import os
 
 from Network.MultiResUNet import UNet
-from dataLoader import data_load
 
 # randomness
 sd = 987
 np.random.seed(sd)
 torch.manual_seed(sd)
-
 
 #####################################
 # Saving best model and checkpoints # 
@@ -80,13 +97,26 @@ def parseArgs():
 # Create pytorch dataloader #
 #############################
 def data_init(batch_size):
-    path_train_input = 'D:/phase-field/data/train/material/mat'
-    path_train_output = 'D:/test/train/autoencoder_10000x8-weightdecay-1e-4/encoded/enc'
-    train_loader = data_load(path_train_input, path_train_output, batch_size, 1000, True)
+    train_input = np.loadtxt('./sample-dataset/sample_input.txt').reshape(-1,1,28,28)
+    train_output = np.loadtxt('./sample-dataset/sample_output_y.txt').reshape(-1,1,28,28)
+    test_input = np.loadtxt('./sample-dataset/sample_input.txt').reshape(-1,1,28,28)
+    test_output = np.loadtxt('./sample-dataset/sample_output_y.txt').reshape(-1,1,28,28)
+    
+    # normalize inputs
+    mu = 33.318421449829934 #based on the mnist input dataset
+    std = 78.56748998339798 #based on the mnist input dataset
+    train_input = (train_input-mu) / std
+    test_input = (test_input-mu) / std
 
-    path_test_input = 'D:/phase-field/data/train/material/mat'
-    path_test_output = 'D:/test/train/autoencoder_10000x8-weightdecay-1e-4/encoded/enc'
-    test_loader = data_load(path_test_input, path_test_output, 8, 8, False)
+    # convert numpy array data to torch tensor
+    train_input = torch.tensor(train_input, dtype=float)
+    train_output = torch.tensor(train_output, dtype=float)
+    test_input = torch.tensor(test_input, dtype=float)
+    test_output = torch.tensor(test_output, dtype=float)
+
+    # set up torch dataloader
+    train_loader = DataLoader(TensorDataset(train_input, train_output), batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(TensorDataset(test_input, test_output), batch_size=batch_size, shuffle=False)
 
     return train_loader, test_loader
 
@@ -114,25 +144,33 @@ class Model(nn.Module):
 def evaluation(args):
     # args
     channels = args.channels
+    model_name = args.model_name
 
-    # GPU
-    dev = 'cuda:0' #if torch.cuda.is_available() else 'cpu'
+    # load the dataset
+    train_loader, test_loader = data_init(batch_size)
+    
+    dev = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
     model = Model(channels)
-    model.load_state_dict(torch.load('wnet-c64-b32-wd0_auto-c32-b8-wd1e-4.pt'))
+    model.load_state_dict(torch.load(model_name+'.pt'))
+    #model, _ = load_model_ckp('./trained-models/'+model_name+'.pt', model)
     model = model.double()
-    model = nn.DataParallel(model, device_ids=[0,1])#,2,3])
+    # uncomment in case of using multiple gpus
+    #model = nn.DataParallel(model, device_ids=[0])
     model.to(dev)
 
-    addr = '/projectnb/lejlab2/saeed/model-training/crackpath/pred'
+    addr = './predicted_output'
+    if not os.path.exists(addr):
+        os.mkdir(addr)
     with torch.no_grad():
-        num = 0
-        for x_batch, _ in train_loader:
+        model.eval()
+        pred = np.zeros((0,28,28))
+        for x_batch, _ in test_loader:
             x_batch = x_batch.to(dev)
             out = model(x_batch)
-            for i in range(len(out[-1])):
-                np.save(addr+str(num)+'.npy', out[-1][i][0].cpu().detach().numpy())
-                num += 1
+            output = out[-1].cpu().detach().numpy().reshape(-1,28,28)
+            pred = np.concatenate([pred, output], axis=0)
+        np.savetxt(addr+model_name+'.txt', pred.reshape(-1,28*28), fmt='%.5f)
 
 
 ######################
@@ -193,7 +231,7 @@ def training(args):
     model.to(dev)
 
     loss_fn = nn.MSELoss(reduction='mean')
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)#, weight_decay=1e-2)
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=decay_step, gamma=decay_rate)
     if ckp:
         optimizer = load_optim_ckp('best_model/'+model_name+'.pt', optimizer)
@@ -247,7 +285,11 @@ def training(args):
             is_best = True
             min_test_loss = test_loss
 
-        adr = 'C:/Users/saeed/OneDrive/دسکتاپ/Codes/Github/MultiRes-WNet'
+        adr = './'
+        if not os.path.exists('./checkpoint'):
+            os.mkdir('./checkpoint)
+        if not os.path.exists('./best_model'):
+            os.mkdir('./best_model)
         save_ckp(checkpoint, is_best, adr+'/checkpoint/ckp_'+model_name+'.pt', adr+'/best_model/'+model_name+'.pt')
 
     with open('error_history.npy', 'wb') as file:
