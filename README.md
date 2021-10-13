@@ -1,6 +1,6 @@
 # MultiRes-WNet
 
-This repository contains the pytorch implementation of MultiRes-WNet, a convolutional neural network architecture used for image-to-image mapping in mechanics-based metamodeling in ''Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
+This repository contains the pytorch implementation of MultiRes-WNet, a convolutional neural network architecture used for image-to-image mapping in mechanics-based metamodeling in ``Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
 
 ![MultiRes-WNet](https://user-images.githubusercontent.com/54042195/127224632-7df3a99d-4408-42a7-a824-d97799ae0492.png)
 
@@ -38,20 +38,4 @@ Predicting crack paths with a trained model:
     python ./crack-path-prediction/prediction.py --c="first lavel channels" --m="model name"
     python ./crack-path-prediction/decoder.py
 
-# This repository contains the following:
-
-## The code used to create the metamodels in the paper
-
-*Network/BuildingBlocks.py* -- contains building blocks used to create MultiRes-WNet and the Autoencoder used in the paper
-
-*Network/MultiResUNet.py* -- contains the model for MultiRes-UNet using BuildingBlocks
-
-*Network/Autoencoder.py* -- contains the model for Autoencoder using BuildingBlocks
-
-*dataLoader.py* -- a pytorch function to load data from a folder
-
-*main.py* -- the script used to train MultiResWNet on the training data and evaluate it on the test data
-
-*trained-models* -- the folder contains best performing models trained on the Mechanical Fashion MNIST
-
-*sample-dataset* -- contains the material distributions and displacement fields for the first 1000 samples in the test set of the Mechanical MNIST Uniaxial Extension
+### This repository contains code and sample data used to generte the results in the manuscript of ``Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
