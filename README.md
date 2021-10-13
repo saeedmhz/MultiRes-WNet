@@ -1,6 +1,6 @@
 # MultiRes-WNet
 
-This repository contains the pytorch implementation of MultiRes-WNet, a convolutional neural network architecture used for image-to-image mapping in mechanics-based metamodeling in ``Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
+This repository contains code and sample data used to generte the results in the manuscript of ``Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
 
 ![MultiRes-WNet](https://user-images.githubusercontent.com/54042195/127224632-7df3a99d-4408-42a7-a824-d97799ae0492.png)
 
@@ -37,5 +37,3 @@ Predicting crack paths with a trained model:
 
     python ./crack-path-prediction/prediction.py --c="first lavel channels" --m="model name"
     python ./crack-path-prediction/decoder.py
-
-### This repository contains code and sample data used to generte the results in the manuscript of ``Predicting Mechanically Driven Full Field Quantities of Interest with Deep Learning-Based Metamodels''.
