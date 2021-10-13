@@ -21,7 +21,23 @@ Trained Models: https://drive.google.com/drive/folders/1CJngW03f6tHqDoukvGUWNcaW
 Train a dicplacement predictor model:
 
     python ./displacement-prediction/train.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --n="network_name" --ch="continue training from a previous checkpoint"
- 
+
+Train a strain predictor model:
+
+    python ./strain-prediction/train.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --ch="continue training from a previous checkpoint"
+
+Train a crack path predictor model:
+
+    7z x ./crack-path-prediction/sample-dataset/damage.7z
+    7z x ./crack-path-prediction/sample-dataset/material.7z
+    python ./crack-path-prediction/encoder.py
+    python ./crack-path-prediction/train.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --ch="continue training from a previous checkpoint"
+
+Predicting crack paths with a trained model:
+
+    python ./crack-path-prediction/prediction.py --c="first lavel channels" --m="model name"
+    python ./crack-path-prediction/decoder.py
+
 # This repository contains the following:
 
 ## The code used to create the metamodels in the paper
