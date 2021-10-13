@@ -14,6 +14,8 @@ Pytorch: https://pytorch.org/get-started/locally/
 
 Manuscript: https://arxiv.org/abs/2108.03995
 
+Trained Models: https://drive.google.com/drive/folders/1CJngW03f6tHqDoukvGUWNcaWF4QGKTn6?usp=sharing
+
 ## Running the model
 
 Train a dicplacement predictor model:
