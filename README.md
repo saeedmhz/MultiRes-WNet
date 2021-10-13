@@ -12,17 +12,15 @@ Mechanical MNIST Crack Path Github: https://github.com/saeedmhz/Mechanical-MNIST
 
 Pytorch: https://pytorch.org/get-started/locally/
 
-Manuscript: 
+Manuscript: https://arxiv.org/abs/2108.03995
+
+Trained Models: https://drive.google.com/drive/folders/1CJngW03f6tHqDoukvGUWNcaWF4QGKTn6?usp=sharing
 
 ## Running the model
 
-Train a model:
+Train a dicplacement predictor model:
 
-    python main.py --lr=learning rate --d=learning rate decay --s=reduce learning rate after s epochs --e=total epochs --b=batch size --c=first layer channels --m=save model(true/false) --mn=model name --tr=true -ev=false
-        
-Test a model:
-
-    python main.py --c=first layer channels --mn=model name --tr=false -ev=true
+    python ./displacement-prediction/train.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --n="network_name" --ch="continue training from a previous checkpoint"
  
 # This repository contains the following:
 
