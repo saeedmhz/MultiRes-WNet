@@ -16,9 +16,9 @@ Manuscript: https://arxiv.org/abs/2108.03995
 
 ## Running the model
 
-Train a model:
+Train a dicplacement predictor model:
 
-    python main.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --n="network_name" --ch="continue training from a previous checkpoint"
+    python ./displacement-prediction/train.py --lr="learning rate" --d="learning rate decay' --s="reduce learning rate after s epochs" --e="total epochs" --b="batch size" --c="first lavel channels" --m="model name" --n="network_name" --ch="continue training from a previous checkpoint"
  
 # This repository contains the following:
 
