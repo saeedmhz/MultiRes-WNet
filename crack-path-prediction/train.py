@@ -80,7 +80,7 @@ def parseArgs():
     parser.add_argument('-e', '--num_epoch', metavar='', type=int, default=30, help='number of epochs - default value = 60')
     parser.add_argument('-b', '--batch_size', metavar='', type=int, default=16, help='number of data points in each mini batch - default value = 128')
     parser.add_argument('-c', '--channels', metavar='', type=int, default=32, help='approximate number of first level channels in the model - default value = 32')
-    parser.add_argument('-mn', '--model_name', metavar='', type=str, default="model", help='save the trained model into or load a trained model from "model_name.pt" - defaul name = "model"')
+    parser.add_argument('-m', '--model_name', metavar='', type=str, default="model", help='save the trained model into or load a trained model from "model_name.pt" - defaul name = "model"')
     parser.add_argument('-ch', '--checkpoint', metavar='', type=int, default=0, help='set to "1" to continue training from a previous checkpoint- default name = 0')
 
     return parser.parse_args()
